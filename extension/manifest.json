@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
-	"version": "0.2.0.9",
-	"name": "Web Scraper Headless",
-	"short_name": "Web Scraper Headless",
+	"version": "0.2.0.10",
+	"name": "iSpy Squad",
+	"short_name": "iSpy Squad",
 	"description": "Tool for data extraction from websites",
 	"permissions": ["<all_urls>", "tabs", "notifications", "storage", "unlimitedStorage", "downloads"],
 	"icons": {
@@ -15,7 +15,7 @@
 			"19": "assets/images/icon19.png",
 			"38": "assets/images/icon38.png"
 		},
-		"default_title": "Web Scraper",
+		"default_title": "iSpy Squad",
 		"default_popup": "popup.html"
 	},
 	"options_page": "options_page/options.html",
