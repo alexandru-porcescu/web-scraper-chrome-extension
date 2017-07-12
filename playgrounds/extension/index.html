@@ -13,40 +13,10 @@
 	<script src="../../extension/assets/ICanHaz.js"></script>
 	<script src="../../extension/assets/sugar-1.4.1.js"></script>
 	<script src="../../extension/assets/jquery.bootstrapvalidator/bootstrapValidator.js"></script>
-	<script src="../../extension/assets/jquery.whencallsequentially.js"></script>
-	<script src="../../extension/assets/base64.js"></script>
-	<script src="../../extension/scripts/ContentScript.js"></script>
-	<script src="../../extension/scripts/BackgroundScript.js"></script>
-	<script src="../../extension/scripts/Config.js"></script>
-	<script src="../../extension/scripts/Selector.js"></script>
-	<script src="../../extension/scripts/SelectorList.js"></script>
-	<script src="../../extension/scripts/ElementQuery.js"></script>
-	<script src="../../extension/scripts/UniqueElementList.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorLink.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorPopupLink.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorImage.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorGroup.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorElement.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorText.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorHTML.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorElementAttribute.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorTable.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorElementScroll.js"></script>
-	<script src="../../extension/scripts/Selector/SelectorElementClick.js"></script>
-	<script src="../../extension/scripts/Sitemap.js"></script>
-	<script src="../../extension/scripts/SelectorGraph.js"></script>
-	<script src="../../extension/scripts/SelectorGraphv2.js"></script>
-	<script src="../../extension/scripts/Store.js"></script>
-	<script src="../../extension/scripts/StoreDevtools.js"></script>
-	<script src="../../extension/assets/css-selector/lib/CssSelector.js"></script>
-	<script src="../../extension/scripts/ContentSelector.js"></script>
-	<script src="../../extension/scripts/Queue.js"></script>
-	<script src="../../extension/scripts/Job.js"></script>
-	<script src="../../extension/scripts/DataExtractor.js"></script>
-	<script src="../../extension/scripts/ChromePopupBrowser.js"></script>
-	<script src="../../extension/scripts/Scraper.js"></script>
+	<!--<script src="../../extension/assets/jquery.whencallsequentially.js"></script>-->
+	<!--<script src="../../extension/assets/base64.js"></script>-->
 
-	<script src="../../extension/scripts/Controller.js"></script>
+    <script src="../../extension/generated/devtools-scraper.js"></script>
 
 	<!-- Simulates chrome API -->
 	<script src="../../tests/ChromeAPI.js"></script>
@@ -54,8 +24,8 @@
 		new ChromeAPI();
 	</script>
 
-	<script src="../../extension/background_page/background_script.js"></script>
-	<script src="../../extension/content_script/content_script.js"></script>
+    <script src="../../extension/generated/background-scraper.js"></script>
+    <script src="../../extension/generated/content-scraper.js"></script>
 
 	<script>
 		$(function () {
