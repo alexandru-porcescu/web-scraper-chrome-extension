@@ -336,9 +336,9 @@ SitemapController.prototype = {
             notEmpty: {
               message: 'The start URL is required and cannot be empty'
             },
-            uri: {
-              message: 'The start URL is not a valid URL'
-            }
+            // FIXME uri: {
+            //   message: 'The start URL is not a valid URL'
+            // }
           }
         }
       }

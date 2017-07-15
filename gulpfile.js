@@ -66,10 +66,26 @@ function generateBuilder (isWatch, debug) {
     ],
     debug
   }))
+  const bundlerPlayground = wrapper(browserify({
+    standalone: 'playgroundScraper',
+    entries: [
+      'extension/scripts/Playground.js'
+    ],
+    debug
+  }))
+  const bundlerOptions = wrapper(browserify({
+    standalone: 'optionsPage',
+    entries: [
+      'extension/options_page/options_page.js'
+    ],
+    debug
+  }))
 
   setBundler(bundlerBackground, 'background-scraper.js')
   setBundler(bundlerScraper, 'content-scraper.js')
   setBundler(bundlerDevtools, 'devtools-scraper.js')
+  setBundler(bundlerPlayground, 'playground-scraper.js')
+  setBundler(bundlerOptions, 'options_page.js')
   function gulpBundle (bundler, file) {
     bundler.bundle()
       .on('error', function (err) {

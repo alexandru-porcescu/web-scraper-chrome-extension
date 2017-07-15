@@ -14,34 +14,20 @@
 	<script src="../../extension/assets/sugar-1.4.1.js"></script>
 	<script src="../../extension/assets/jquery.bootstrapvalidator/bootstrapValidator.js"></script>
 	<!--<script src="../../extension/assets/jquery.whencallsequentially.js"></script>-->
-	<!--<script src="../../extension/assets/base64.js"></script>-->
+    <!--<script src="../../extension/assets/base64.js"></script>-->
 
-    <script src="../../extension/generated/devtools-scraper.js"></script>
+    <!-- Simulates chrome API -->
+    <script src="../../tests/ChromeAPI.js"></script>
 
-	<!-- Simulates chrome API -->
-	<script src="../../tests/ChromeAPI.js"></script>
-	<script>
-		new ChromeAPI();
-	</script>
+    <script>
+        new ChromeAPI();
+    </script>
 
     <script src="../../extension/generated/background-scraper.js"></script>
     <script src="../../extension/generated/content-scraper.js"></script>
+    <script src="../../extension/generated/playground-scraper.js"></script>
+    <script src="../../extension/content_script/content_script.js"></script>
 
-	<script>
-		$(function () {
-			// init bootstrap alerts
-			$(".alert").alert();
-
-			var config = new Config();
-			config.loadConfiguration(function () {
-				var store = new Store(config);
-				new SitemapController({
-					store: store,
-					templateDir: '../../extension/devtools/views/'
-				}, {$});
-			});
-		});
-	</script>
 </head>
 <body>
 <div id="webpage">

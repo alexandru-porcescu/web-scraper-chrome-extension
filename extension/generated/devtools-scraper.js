@@ -944,10 +944,10 @@ SitemapController.prototype = {
           validators: {
             notEmpty: {
               message: 'The start URL is required and cannot be empty'
-            },
-            uri: {
-              message: 'The start URL is not a valid URL'
             }
+            // FIXME uri: {
+            //   message: 'The start URL is not a valid URL'
+            // }
           }
         }
       }
@@ -1661,10 +1661,9 @@ SitemapController.prototype = {
       sitemap: JSON.parse(JSON.stringify(sitemap)),
       requestInterval: requestInterval,
       pageLoadDelay: pageLoadDelay
-    };
 
-    // show sitemap scraping panel
-    this.getFormValidator().destroy();
+      // show sitemap scraping panel
+    };this.getFormValidator().destroy();
     this.$('.scraping-in-progress').removeClass('hide');
     this.$('#submit-scrape-sitemap').closest('.form-group').hide();
     this.$('#scrape-sitemap-config input').prop('disabled', true);
@@ -1688,10 +1687,9 @@ SitemapController.prototype = {
       sitemap: JSON.parse(JSON.stringify(sitemap)),
       requestInterval: requestInterval,
       pageLoadDelay: pageLoadDelay
-    };
 
-    // show sitemap scraping panel
-    this.getFormValidator().destroy();
+      // show sitemap scraping panel
+    };this.getFormValidator().destroy();
     this.$('.scraping-in-progress').removeClass('hide');
     this.$('#submit-scrape-sitemap').closest('.form-group').hide();
     this.$('#scrape-sitemap-config input').prop('disabled', true);

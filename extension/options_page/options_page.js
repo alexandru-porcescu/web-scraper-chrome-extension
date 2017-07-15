@@ -1,3 +1,5 @@
+var Config = require('../scripts/Config')
+
 $(function () {
   console.log('opening config page')
 	// popups for Storage setting input fields
