@@ -76,19 +76,19 @@ window = globals.window
     })
   })
 
-  it('should extract null when there is no regex match', function (done) {
+  it('should return the same element when there is no regex replace match', function (done) {
     var selector = new Selector({
       id: 'a',
       type: 'SelectorText',
       multiple: false,
       selector: 'div',
-      regex: 'wontmatch'
+      regexReplace: [{"regex": "wontmatch", "options": "", "replacement": "wontmatch" }]
     }, {$, document, window})
     var dataDeferred = selector.getData(document.querySelectorAll('#selector-text-single-regex')[0])
     dataDeferred.then(function (data) {
       var expected = [
         {
-          a: null
+          a: 'aaaaaaa11113123aaaaa11111'
         }
       ]
       assert.deepEqual(data, expected)
@@ -102,13 +102,13 @@ window = globals.window
       type: 'SelectorText',
       multiple: false,
       selector: 'div',
-      regex: '\\d+'
+      regexReplace: [{"regex": "[0-9]+", "options": "gm", "replacement": "" }]
     }, {$, document, window})
     var dataDeferred = selector.getData(document.querySelectorAll('#selector-text-single-regex')[0])
     dataDeferred.then(function (data) {
       var expected = [
         {
-          a: '11113123'
+          a: 'aaaaaaaaaaaa'
         }
       ]
       assert.deepEqual(data, expected)

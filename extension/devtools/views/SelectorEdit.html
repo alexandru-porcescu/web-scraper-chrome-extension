@@ -143,6 +143,68 @@
 		</div>
 	</div>
 
+	    {{#selector.regexReplace.push}}
+		{{#selector.regexReplace}}
+		    <div class="form-group feature feature-regexReplace replace-regex-block replace-regex">
+                <label for="selector" class="col-lg-1 control-label">Replace</label>
+                <div class="col-lg-10">
+	                <div class="row">
+	                    <div class="col-md-6">
+	                        <div class="input-group">
+	                            <span class="input-group-addon">/</span>
+	                            <input type="text" class="form-control regex-input" placeholder="regex" aria-label="regex" value="{{regex}}">
+	                            <span class="input-group-addon">/</span>
+	                        </div>
+	                    </div>
+	                    <div class="col-sm-2">
+	                        <input id="regex_2" class="form-control regex-options" placeholder="options" value="{{options}}" type="text">
+	                    </div>
+	                    <div class="col-sm-4">
+
+	                        <div class="input-group">
+	                            <input id="replacement" class="form-control regex-replacement" placeholder="replacement" value="{{replacement}}" type="text">
+	                            <span class="input-group-btn">
+	                                <button class="btn btn-default remove-replace-regex" type="button">-</button>
+	                                <button class="btn btn-default add-replace-regex" type="button">+</button>
+	                            </span>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+    	{{/selector.regexReplace}}
+	{{/selector.regexReplace.push}}
+
+    {{^selector.regexReplace}}
+            <div class="form-group feature feature-regexReplace replace-regex-block replace-regex">
+                <label for="selector" class="col-lg-1 control-label">Replace</label>
+                <div class="col-lg-10">
+	                <div class="row">
+	                    <div class="col-md-6">
+	                        <div class="input-group">
+	                            <span class="input-group-addon">/</span>
+	                            <input type="text" class="form-control regex-input" placeholder="regex" aria-label="regex" value="{{regex}}">
+	                            <span class="input-group-addon">/</span>
+	                        </div>
+	                    </div>
+	                    <div class="col-sm-2">
+	                        <input id="regex_2" class="form-control regex-options" placeholder="options" value="{{options}}" type="text">
+	                    </div>
+	                    <div class="col-sm-4">
+
+	                        <div class="input-group">
+	                            <input id="replacement" class="form-control regex-replacement" placeholder="replacement" value="{{replacement}}" type="text">
+	                            <span class="input-group-btn">
+	                                <button class="btn btn-default remove-replace-regex" type="button">-</button>
+	                                <button class="btn btn-default add-replace-regex" type="button">+</button>
+	                            </span>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+    {{/selector.regexReplace}}
+
 	<div class="form-group feature feature-extractAttribute">
 		<label for="extractAttribute" class="col-lg-1 control-label">Attribute name</label>
 

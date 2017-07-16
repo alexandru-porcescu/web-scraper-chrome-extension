@@ -79,20 +79,20 @@ window = globals.window
     })
   })
 
-  it('should extract null when there is no regex match', function (done) {
+  it('should return the same element when there is no regex replace match', function (done) {
     var selector = new Selector({
       id: 'a',
       type: 'SelectorHTML',
       multiple: false,
       selector: 'div',
-      regex: 'wontmatch'
+      regexReplace: [{"regex": "wontmatch", "options": "", "replacement": "wontmatch" }]
     }, {$, document, window})
     var dataDeferred = selector.getData(document.querySelectorAll('#selector-html-single-html')[0])
     dataDeferred.then(function (data) {
       assert.equal(data.length, 1)
       var expected = [
         {
-          a: null
+          a: 'aaa<b>bbb</b>ccc'
         }
       ]
       assert.deepEqual(data, expected)
@@ -100,20 +100,20 @@ window = globals.window
     })
   })
 
-  it('should extract html+text using regex', function (done) {
+  it('should replace div tags using regex replace', function (done) {
     var selector = new Selector({
       id: 'a',
       type: 'SelectorHTML',
       multiple: false,
       selector: 'div',
-      regex: '<b>\\w+'
+      regexReplace: [{"regex": "<div>|<\/div>|<b>|<\/b>", "options": "gm", "replacement": "" }]
     }, {$, document, window})
     var dataDeferred = selector.getData(document.querySelectorAll('#selector-html-single-html')[0])
     dataDeferred.then(function (data) {
       assert.equal(data.length, 1)
       var expected = [
         {
-          a: '<b>bbb'
+          a: 'aaabbbccc'
         }
       ]
       assert.deepEqual(data, expected)

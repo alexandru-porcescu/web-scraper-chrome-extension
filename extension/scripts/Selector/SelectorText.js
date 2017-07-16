@@ -38,14 +38,6 @@ var window = this.window
       $element_clone.find('br').after('\n')
 
       var text = $element_clone.text()
-      if (this.regex !== undefined && this.regex.length) {
-        var matches = text.match(new RegExp(this.regex))
-        if (matches !== null) {
-          text = matches[0]
-        } else {
-          text = null
-        }
-      }
       data[this.id] = text
 
       result.push(data)
@@ -66,7 +58,7 @@ var window = this.window
   },
 
   getFeatures: function () {
-    return ['multiple', 'regex', 'delay']
+    return ['multiple', 'regexReplace', 'delay']
   }
 }
 

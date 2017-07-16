@@ -88,3 +88,7 @@ form select[multiple], select[size] {
 .data-preview-modal tbody tr {
 	cursor: initial;
 }
+
+.feature-regexReplace .input-group-addon {
+    padding: 4px 12px;
+}

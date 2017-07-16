@@ -42,7 +42,7 @@ Selector.prototype = {
 	 * @param data
 	 */
   updateData: function (data) {
-    var allowedKeys = ['window', 'document', 'id', 'type', 'selector', 'parentSelectors']
+    var allowedKeys = ['window', 'document', 'id', 'type', 'selector', 'parentSelectors', 'regexReplace']
     console.log('data type', data.type)
     allowedKeys = allowedKeys.concat(selectors[data.type].getFeatures())
     var key
@@ -123,23 +123,135 @@ Selector.prototype = {
   getData: function (parentElement) {
     var d = jquery.Deferred()
     var timeout = this.delay || 0
+    var self = this
 
 		// this works much faster because whenCallSequentally isn't running next data extraction immediately
     if (timeout === 0) {
       var deferredData = this._getData(parentElement)
       deferredData.done(function (data) {
+        self.manipulateData(data)
         d.resolve(data)
       })
     }	else {
       setTimeout(function () {
         var deferredData = this._getData(parentElement)
         deferredData.done(function (data) {
+          self.manipulateData(data)
           d.resolve(data)
         })
       }.bind(this), timeout)
     }
 
     return d.promise()
+  },
+
+  /**
+  * Manipulates return data from selector.
+  * @param data
+  */
+  manipulateData: function (data) {
+
+      var $ = this.$
+      var document = this.document
+      var window = this.window
+
+      var regex = function (content, regex, regexgroup) {
+          try {
+              content = $.trim(content);
+              var matches = content.match(new RegExp(regex, 'gm')),
+                  groupDefined = regexgroup !== "";
+
+              regexgroup = groupDefined ? regexgroup : 0;
+
+
+              if (matches !== null) {
+                  return matches[regexgroup];
+              }
+              else {
+                  return '';
+              }
+          } catch (e) { console.log("%c Skipping regular expression: " + e.message, 'background: red; color: white;'); }
+      }
+
+      var applyRegexReplace = function(data, regexReplace) {
+
+        if (regexReplace === undefined || !regexReplace.length) {
+          return data;
+        }
+        var replaceRule, regex, replacement, options, regexLiteral;
+        try {
+          for (var i = 0; i < regexReplace.length; i++) {
+            replaceRule = regexReplace[i];
+
+            regexLiteral = replaceRule['regex'];
+            
+            // if regex is blank skip
+            if(!regexLiteral || !regexLiteral.trim()) {continue;}
+
+            //add global modifier
+            options = replaceRule['options'];
+            options = options.indexOf('g') > -1 ? options : options + "g";
+
+            regex = new RegExp(regexLiteral, options);
+            data = data.replace(regex, replaceRule['replacement']);
+          }
+        }
+        catch (e) {
+           console.log(e);
+        }
+        
+        return data;    
+      }
+
+      var removeHtml = function (content) {
+          return $("<div/>").html(content).text();
+      }
+
+      var trimText = function (content) {
+          return content.trim();
+      }
+
+      var replaceText = function (content, replaceText, replacementText) {
+          var replace;
+          try {
+              var regex = new RegExp(replaceText, 'gm');
+              replace = regex.test(content) ? regex : replaceText;
+          } catch (e) { replace = replaceText; }
+
+          return content.replace(replace, replacementText);
+      }
+
+      var textPrefix = function (content, prefix) {
+          return content = prefix + content;
+      }
+
+      var textSuffix = function (content, suffix) {
+          return content += suffix;
+      }
+
+      $(data).each(function (i, element) {
+          var $ = this.$
+
+          var content = element[this.id],
+              isString = typeof content === 'string' || content instanceof String,
+              isUnderlyingString = !isString && $(content).text() !== "",
+              isArray = Array.isArray(content), 
+              // for now we have only regex replace as text manipulation
+              isTextmManipulationDefined = typeof this.regexReplace != 'undefined' && this.regexReplace !== "",
+              textManipulationAvailable = (isString || isUnderlyingString) && isTextmManipulationDefined;
+
+          if (textManipulationAvailable) {
+              content = isString ? content : $(content).text();
+
+              content = applyRegexReplace(content, this.regexReplace)
+
+              element[this.id] = content;
+          } else if (isArray && isTextmManipulationDefined) {
+              element[this.id] = JSON.stringify(content);
+              this.manipulateData(element);
+          }
+
+      }.bind(this));
   }
 }
 

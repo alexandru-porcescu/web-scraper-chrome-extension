@@ -62,7 +62,8 @@ SitemapController.prototype = {
       'SelectorEdit',
       'SelectorEditTableColumn',
       // 'SitemapSelectorGraph',
-      'DataPreview'
+      'DataPreview',
+      'SelectorReplaceRegexField'
     ]
     var templatesLoaded = 0
     var cbLoaded = function (templateId, template) {
@@ -219,6 +220,12 @@ SitemapController.prototype = {
         },
         'button.remove-start-url': {
           click: this.removeStartUrl
+        },
+        "button.add-replace-regex": {
+          click: this.addReplaceRegex
+        },
+        "button.remove-replace-regex": {
+          click: this.removeReplaceRegex
         }
       })
       this.showSitemaps()
@@ -878,6 +885,7 @@ var window = this.window
     var $columnHeaders = $('#edit-selector .column-header')
     var $columnNames = $('#edit-selector .column-name')
     var $columnExtracts = $('#edit-selector .column-extract')
+    var replace = this.getSelectorRegexReplaceFromEditForm();
 
     $columnHeaders.each(function (i) {
       var header = $($columnHeaders[i]).val()
@@ -907,7 +915,8 @@ var window = this.window
       extractAttribute: extractAttribute,
       parentSelectors: parentSelectors,
       columns: columns,
-      delay: delay
+      delay: delay,
+      regexReplace: replace,
     }, {
       $, document, window
     })
@@ -1485,6 +1494,45 @@ var window = this.window
       validator.removeField($block.find('input'))
 
       $block.remove()
+    }
+  },
+
+  getSelectorRegexReplaceFromEditForm: function(){
+    var $ = this.$
+
+    var replaceRegexData = [];
+
+    var $replaceBlocks = $("#viewport form .replace-regex-block");
+    if($replaceBlocks.length < 1) {
+      return replaceRegexData;
+    }
+
+    $replaceBlocks.each(function(i, replaceBlock) {
+
+        var regexLiteral = $(replaceBlock).find("input.regex-input").val();
+
+        if (!regexLiteral) { return true };
+
+        replaceRegexData.push({
+          regex: regexLiteral.trim(),
+          options: $(replaceBlock).find("input.regex-options").val().trim(),
+          replacement: $(replaceBlock).find("input.regex-replacement").val().trim(),
+        });
+    });
+
+    return replaceRegexData;
+  },
+  addReplaceRegex: function(button) {
+
+    var $replaceRegexInputField = ich.SelectorReplaceRegexField();
+    $("#viewport .replace-regex-block:last").after($replaceRegexInputField);
+  },
+  removeReplaceRegex: function(button) {
+
+    var $block = $(button).closest(".replace-regex-block");
+    if($("#viewport .replace-regex-block").length > 1) {
+
+      $block.remove();
     }
   }
 }
