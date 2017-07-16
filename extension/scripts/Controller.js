@@ -5,6 +5,7 @@ var Sitemap = require('./Sitemap')
 // var SelectorGraphv2 = require('./SelectorGraphv2')
 var getBackgroundScript = require('./getBackgroundScript')
 var getContentScript = require('./getContentScript')
+var SpiderSelector = require('./SpiderSelector')
 var SitemapController = function (options, moreOptions) {
   this.$ = moreOptions.$
   this.document = moreOptions.document
@@ -62,7 +63,8 @@ SitemapController.prototype = {
       'SelectorEdit',
       'SelectorEditTableColumn',
       // 'SitemapSelectorGraph',
-      'DataPreview'
+      'DataPreview',
+      'SpiderExport'
     ]
     var templatesLoaded = 0
     var cbLoaded = function (templateId, template) {
@@ -103,6 +105,9 @@ SitemapController.prototype = {
         },
         '#sitemap-export-nav-button': {
           click: this.showSitemapExportPanel
+        },
+        '#sitemap-export-spider-nav-button': {
+          click: this.showSpiderExportPanel
         },
         '#sitemap-export-data-csv-nav-button': {
           click: this.showSitemapExportDataCsvPanel
@@ -732,9 +737,13 @@ var window = this.window
     var sitemap = this.state.currentSitemap
     var selectorIds = sitemap.getPossibleParentSelectorIds()
 
+    var doneSelectorIds = sitemap.getSelectorIds();
+    var remainingSelectors = SpiderSelector.selectorsExcept(doneSelectorIds);
+
     var $editSelectorForm = ich.SelectorEdit({
       selector: selector,
       selectorIds: selectorIds,
+      remainingSelectors: remainingSelectors,
       selectorTypes: [
         {
           type: 'SelectorText',
@@ -1486,7 +1495,22 @@ var window = this.window
 
       $block.remove()
     }
-  }
+  },
+  showSpiderExportPanel: function () {
+    this.setActiveNavigationButton('sitemap-export-spider')
+    var sitemap = this.state.currentSitemap
+
+    var spiderObj =  SpiderSelector.generateSpiderRulesFromSitemap(sitemap, {$: this.$});
+
+    var spiderExportForm = ich.SpiderExport({
+      spiderJSON: JSON.stringify(spiderObj)
+    });
+
+    $("#viewport").html(spiderExportForm);
+
+    return true;
+
+  },
 }
 
 module.exports = SitemapController

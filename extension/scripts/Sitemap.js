@@ -228,6 +228,21 @@ var window = this.window
   getSelectorById: function (selectorId) {
     return this.selectors.getSelectorById(selectorId)
   },
+  getSiteUrl: function() {
+    var startUrls = this.getStartUrls();
+    if (startUrls.length > 0) {
+      return startUrls[0];
+    }
+    return ""
+  },
+  /**
+   * Gets the sitemap selectors.
+   *
+   * @return     []  The sitemap selectors.
+   */
+  getSitemapSelectors: function () {
+    return this.getAllSelectors("_root");
+  },
 	/**
 	 * Create full clone of sitemap
 	 * @returns {Sitemap}

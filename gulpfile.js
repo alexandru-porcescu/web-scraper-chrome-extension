@@ -97,7 +97,7 @@ function generateBuilder (isWatch, debug) {
         console.error(e)
       })
       .on('end', function () {
-        runTests()
+        //runTests()
         console.log('finished bundling')
         // TODO launch tests
       })

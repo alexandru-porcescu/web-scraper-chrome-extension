@@ -4,7 +4,16 @@
 		<label for="selectorId" class="col-lg-1 control-label">Id</label>
 
 		<div class="col-lg-10">
-			<input type="text" class="form-control" name="id" id="selectorId" placeholder="Selector Id" value="{{selector.id}}">
+			<input type="text" class="form-control" name="id" id="selectorId"  list="remainingSelectors" placeholder="Selector Id" value="{{selector.id}}">
+		    
+		    <datalist id="remainingSelectors">
+				{{#remainingSelectors}}
+					<!-- <optgroup label="{{group}}"> -->
+					{{#selectors}}
+						<option value="{{id}}"> <!-- {{label}}</option> -->
+					{{/selectors}}	  
+				{{/remainingSelectors}}
+			</datalist>
 		</div>
 	</div>
 
