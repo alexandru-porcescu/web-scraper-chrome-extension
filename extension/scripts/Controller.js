@@ -525,6 +525,9 @@ var window = this.window
     this.initMultipleStartUrlHelper()
     this.initSitemapValidation()
 
+    // add extra sitemap options // maybe bind another event on Spider Selector or trigger custom event
+    SpiderSelector.injectExtraSpiderSitemapFields(this.$('#viewport'), {$: this.$});
+
     return true
   },
 

@@ -308,6 +308,51 @@ SpiderSelector.generateSpiderRulesFromSitemap = function(sitemap, options) {
 
 }
 
+SpiderSelector.injectExtraSpiderSitemapFields = function($viewport, options) {
+	var $ = options.$
+
+	var $textTemplate = '<div class="form-group"> <label for="<%=id %>" class="col-lg-1 control-label"><%=node.title %></label> <div class="col-lg-10"> <input type="text" class="form-control" name="<%=node.name %>" value="<%=escape(value) %>" id="<%=id %>" placeholder="<%=node.title %>"> </div></div>';
+    var $wrapper = $('<div id="jsonform"><form class="form-horizontal"> </form></div>')
+    //this.$('#viewport').append($wrapper);
+    //this.$('#jsonform form').jsonForm({
+    $wrapper.find('form').jsonForm({
+        schema: {
+          name: {
+            type: 'string',
+            title: 'Name',
+            required: true
+          },
+          age: {
+            type: 'number',
+            title: 'Age'
+          }
+        },
+        form: [{
+          key: 'name',
+          notitle: true,
+          template: $textTemplate
+        },{
+          key: 'age',
+          notitle: true,
+          template: $textTemplate
+        }],
+        onSubmit: function (errors, values) {
+          if (errors) {
+            $('#res').html('<p>I beg your pardon?</p>');
+          }
+          else {
+            $('#res').html('<p>Hello ' + values.name + '.' +
+              (values.age ? '<br/>You are ' + values.age + '.' : '') +
+              '</p>');
+          }
+        }
+      });
+
+    var lastInputForm = $viewport.find('.submit-edit-sitemap-wrapper');
+    $wrapper.find('.form-group').insertBefore(lastInputForm);
+
+}
+
 SpiderSelector.SelectorTypes = [
 		{
 			type: 'SelectorText',
