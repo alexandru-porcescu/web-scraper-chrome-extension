@@ -308,15 +308,33 @@ SpiderSelector.generateSpiderRulesFromSitemap = function(sitemap, options) {
 
 }
 
+SpiderSelector.getInjectedFieldTemplate = function(inputType) {
+
+	switch (inputType) {
+	  case 'text':
+	    return '<div class="form-group"> <label for="<%=id %>" class="col-lg-1 control-label"><%=node.title %></label> <div class="col-lg-10"> <input type="text" class="form-control" name="<%=node.name %>" value="<%=escape(value) %>" id="<%=id %>" placeholder="<%=node.title %>"> </div></div>';
+	    break;
+	  case 'checkbox':
+	    return '<div class="form-group"><div class="col-lg-offset-1 col-lg-10"><div class="checkbox"><label><input type="checkbox" name="<%=node.name %>"> <%=node.title %></label></div></div></div>';
+	    break;
+	  default:
+	    return '';
+	}
+
+}
 SpiderSelector.injectExtraSpiderSitemapFields = function($viewport, options) {
 	var $ = options.$
 
-	var $textTemplate = '<div class="form-group"> <label for="<%=id %>" class="col-lg-1 control-label"><%=node.title %></label> <div class="col-lg-10"> <input type="text" class="form-control" name="<%=node.name %>" value="<%=escape(value) %>" id="<%=id %>" placeholder="<%=node.title %>"> </div></div>';
+	var $textTemplate = SpiderSelector.getInjectedFieldTemplate('text');
     var $wrapper = $('<div id="jsonform"><form class="form-horizontal"> </form></div>')
     //this.$('#viewport').append($wrapper);
     //this.$('#jsonform form').jsonForm({
     $wrapper.find('form').jsonForm({
         schema: {
+        	useCurrentRequestProxy: {
+		      "type": "boolean",
+		      "title": "useCurrentRequestProxy"
+		      },
           name: {
             type: 'string',
             title: 'Name',
@@ -335,6 +353,10 @@ SpiderSelector.injectExtraSpiderSitemapFields = function($viewport, options) {
           key: 'age',
           notitle: true,
           template: $textTemplate
+        },{
+          key: 'useCurrentRequestProxy',
+          notitle: true,
+          template: SpiderSelector.getInjectedFieldTemplate('checkbox')
         }],
         onSubmit: function (errors, values) {
           if (errors) {
