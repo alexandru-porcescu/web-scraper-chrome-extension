@@ -326,38 +326,120 @@ SpiderSelector.injectExtraSpiderSitemapFields = function($viewport, options) {
 	var $ = options.$
 
 	var $textTemplate = SpiderSelector.getInjectedFieldTemplate('text');
+	var $booleanTemplate = SpiderSelector.getInjectedFieldTemplate('checkbox');
     var $wrapper = $('<div id="jsonform"><form class="form-horizontal"> </form></div>')
+
     //this.$('#viewport').append($wrapper);
     //this.$('#jsonform form').jsonForm({
     $wrapper.find('form').jsonForm({
         schema: {
-        	useCurrentRequestProxy: {
-		      "type": "boolean",
-		      "title": "useCurrentRequestProxy"
-		      },
-          name: {
-            type: 'string',
-            title: 'Name',
-            required: true
-          },
-          age: {
-            type: 'number',
-            title: 'Age'
-          }
-        },
-        form: [{
-          key: 'name',
-          notitle: true,
-          template: $textTemplate
-        },{
-          key: 'age',
-          notitle: true,
-          template: $textTemplate
-        },{
-          key: 'useCurrentRequestProxy',
-          notitle: true,
-          template: SpiderSelector.getInjectedFieldTemplate('checkbox')
-        }],
+		  "page_verifier": {
+		    "type": "text",
+		    "title": "Page verifier"
+		  },
+		  "secondPageVerifier": {
+		    "type": "text",
+		    "title": "Second page verifier"
+		  },
+		  "page_not_found": {
+		    "type": "text",
+		    "title": "Page not found"
+		  },
+		  "link_append": {
+		    "type": "text",
+		    "title": "Link append"
+		  },
+		  "page_one": {
+		    "type": "text",
+		    "title": "Page one",
+		  },
+		  "page_regex": {
+		    "type": "text",
+		    "title": "Page regex"
+		  },
+		  "link_final_slash": {
+		    "type": "boolean",
+		    "title": "Link final slash"
+		  },
+		  "product_page_final_slash": {
+		    "type": "boolean",
+		    "title": "Product page final slash"
+		  },
+		  "pagination_replace": {
+		    "type": "boolean",
+		    "title": "Pagination replace"
+		  },
+		  "relative_link": {
+		    "type": "boolean",
+		    "title": "Relative link"
+		  },
+		  "pagination_prepend": {
+		    "type": "boolean",
+		    "title": "Pagination prepend"
+		  },
+		  "pagination_relative": {
+		    "type": "boolean",
+		    "title": "Pagination relative"
+		  },
+		  "no_trim_slash": {
+		    "type": "boolean",
+		    "title": "No trim slash"
+		  }
+		},
+        form: [
+		  {"key": "link_append",
+		    "notitle": true,
+		    "template": $textTemplate
+		  },
+		  {"key": "page_verifier",
+		    "notitle": true,
+		    "template": $textTemplate
+		  },
+		  {"key": "secondPageVerifier",
+		    "notitle": true,
+		    "template": $textTemplate
+		  },
+		  {"key": "page_not_found",
+		    "notitle": true,
+		    "template": $textTemplate
+		  },
+		  {"key": "page_one",
+		    "notitle": true,
+		    "template": $textTemplate
+		  },
+		  {"key": "page_regex",
+		    "notitle": true,
+		    "template": $textTemplate
+		  },
+		  {"key": "link_final_slash",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  },
+		  {"key": "product_page_final_slash",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  },
+		  {"key": "pagination_replace",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  },
+		  {"key": "relative_link",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  },
+		  {"key": "pagination_prepend",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  },
+		  {"key": "pagination_relative",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  },
+		  {"key": "no_trim_slash",
+		    "notitle": true,
+		    "template": $booleanTemplate
+		  }
+		],
         onSubmit: function (errors, values) {
           if (errors) {
             $('#res').html('<p>I beg your pardon?</p>');
@@ -370,7 +452,7 @@ SpiderSelector.injectExtraSpiderSitemapFields = function($viewport, options) {
         }
       });
 
-    var lastInputForm = $viewport.find('.submit-edit-sitemap-wrapper');
+    var lastInputForm = $viewport.find('.submit-sitemap-wrapper');
     $wrapper.find('.form-group').insertBefore(lastInputForm);
 
 }
